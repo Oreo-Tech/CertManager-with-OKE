@@ -1,0 +1,20 @@
+# helm repo add nginx-stable https://helm.nginx.com/stable
+
+# Ingress
+#   helm install nginx-ingress nginx-stable/nginx-ingress \
+#   --set rbac.create=true 
+
+
+Install Ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.3/deploy/static/provider/cloud/deploy.yaml
+
+
+helm repo add jetstack https://charts.jetstack.io
+
+Cert-manager
+  helm install cert-manager jetstack/cert-manager \
+    --set ingressShim.defaultIssuerName=letsencrypt-staging \
+    --set ingressShim.defaultIssuerKind=ClusterIssuer \
+    --set ingressShim.defaultIssuerGroup=cert-manager.io \
+    --version v1.11.0 \
+    --set installCRDs=true  

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  name: hello-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true" 
+    cert-manager.io/issuer: cm-staging
+    cert-manager.io/acme-challenge-type: http01
+spec:
+  tls:
+  - hosts:
+    - sunsu.193.122.173.134.nip.io
+    secretName: cm-tls
+  rules:
+  - host: sunsu.193.122.173.134.nip.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: hello-cluster-service
+            port:
+              number: 80
+        pathType: Prefix
+        path: /
